@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  xgboost-fertilizer:
+    build: .
+    volumes:
+      - .:/app/output
+    working_dir: /app
+    environment:
+      - RUST_LOG=info
+    command: >
+      sh -c "
+        echo '🚀 Construction et exécution XGBoost Fertilizer Classifier avec TPE...' &&
+        cargo build --release &&
+        ./target/release/regression &&
+        echo '📁 Copie des résultats vers output...' &&
+        cp submission_xgboost2.csv /app/output/ &&
+        echo '✅ Terminé! Résultats dans submission_xgboost2.csv'
+      " 
